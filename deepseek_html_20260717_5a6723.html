@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Recordari · CP安利站</title>
+  <!-- 引入 Font Awesome 6 图标库，用于简洁图标 -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #f29c26;
+      font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+      color: #2e2e2e;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* 整体容器，保持背景色一致 */
+    .wrapper {
+      background-color: #f29c26;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 简约导航 */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2.5rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      color: white;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .logo i {
+      margin-right: 0.5rem;
+      color: #fff3e0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a i {
+      font-size: 1rem;
+    }
+
+    .nav-links a:hover {
+      border-bottom-color: white;
+      opacity: 0.9;
+    }
+
+    /* 主要内容区域 */
+    .main-content {
+      flex: 1;
+      padding: 2rem 2.5rem;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* 卡片通用设计：简洁白色半透明，圆角大，美观 */
+    .card {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-radius: 2.5rem;
+      padding: 2rem 2.2rem;
+      box-shadow: 0 20px 35px rgba(0, 0, 0, 0.1), 0 5px 12px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      margin-bottom: 2.5rem;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+    }
+
+    /* 首页 Hero 区域 */
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .hero-title {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+    }
+
+    .hero-sub {
+      font-size: 1.3rem;
+      color: #fff5e6;
+      margin-bottom: 2rem;
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1.5rem;
+      width: 100%;
+    }
+
+    .feature-item {
+      background: rgba(255,255,255,0.9);
+      border-radius: 2rem;
+      padding: 1.8rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+      transition: all 0.25s;
+    }
+
+    .feature-item i {
+      font-size: 2.4rem;
+      color: #f29c26;
+      margin-bottom: 1rem;
+    }
+
+    .feature-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      color: #3a3a3a;
+    }
+
+    /* 图片视频区域 */
+    .media-section {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .media-image {
+      flex: 1 1 300px;
+      border-radius: 2rem;
+      overflow: hidden;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+      background: #fff;
+      aspect-ratio: 16 / 9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .media-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-container {
+      flex: 1 1 300px;
+      border-radius: 2rem;
+      overflow: hidden;
+      box-shadow: 0 15px 25px rgba(0,0,0,0.15);
+      background: #000;
+      aspect-ratio: 16 / 9;
+    }
+
+    .video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* 时间线设计 */
+    .timeline {
+      position: relative;
+      margin: 2rem 0 1rem;
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 1.5rem;
+      margin-bottom: 2.2rem;
+      position: relative;
+      align-items: flex-start;
+    }
+
+    .timeline-marker {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .timeline-dot {
+      width: 18px;
+      height: 18px;
+      background: #f29c26;
+      border-radius: 50%;
+      border: 3px solid white;
+      box-shadow: 0 0 0 3px rgba(242, 156, 38, 0.4);
+      margin-top: 5px;
+    }
+
+    .timeline-line {
+      width: 2px;
+      background: rgba(255,255,255,0.7);
+      flex: 1;
+      margin-top: 8px;
+    }
+
+    .timeline-content {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(8px);
+      border-radius: 1.8rem;
+      padding: 1.2rem 1.8rem;
+      flex: 1;
+      box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+    }
+
+    .timeline-content h4 {
+      font-size: 1.3rem;
+      color: #c06f1e;
+      margin-bottom: 0.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .timeline-date {
+      font-weight: 600;
+      color: #5e3a10;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+      letter-spacing: 0.3px;
+    }
+
+    /* 资讯卡片 */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.8rem;
+      margin-top: 1rem;
+    }
+
+    .news-item {
+      background: rgba(255,255,255,0.8);
+      border-radius: 1.8rem;
+      padding: 1.5rem;
+      transition: 0.2s;
+    }
+
+    .news-item i {
+      color: #f29c26;
+      margin-right: 0.4rem;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 2px solid white;
+      color: white;
+      padding: 0.6rem 1.8rem;
+      border-radius: 3rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: 0.2s;
+      margin-top: 0.8rem;
+    }
+
+    .btn-outline:hover {
+      background: white;
+      color: #f29c26;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: white;
+      font-size: 0.95rem;
+      background: rgba(0,0,0,0.08);
+      margin-top: 2rem;
+    }
+
+    @media (max-width: 700px) {
+      .navbar {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .hero-title {
+        font-size: 2.5rem;
+      }
+      .main-content {
+        padding: 1.5rem 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+  <!-- 导航栏 -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-heart"></i> Recordari
+    </div>
+    <div class="nav-links">
+      <a href="#home"><i class="fas fa-home"></i>首页</a>
+      <a href="#news"><i class="fas fa-calendar-alt"></i>活动资讯</a>
+      <a href="#timeline"><i class="fas fa-stream"></i>时间线</a>
+      <a href="#media"><i class="fas fa-images"></i>映像</a>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <!-- 首页区域 -->
+    <section id="home">
+      <div class="hero-section">
+        <h1 class="hero-title">✨ 我们的故事 ✨</h1>
+        <p class="hero-sub"><i class="fas fa-meteor"></i> 记录属于TA们的每一刻 · CP安利站 <i class="fas fa-meteor"></i></p>
+      </div>
+
+      <div class="card">
+        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+          <i class="fas fa-star" style="font-size: 2rem; color: #f29c26;"></i>
+          <h2 style="font-weight: 600; color: #3d2b13;">欢迎来到Recordari</h2>
+        </div>
+        <p style="font-size: 1.2rem; margin-bottom: 1.8rem; color: #3e2e1a;">这里是最温暖的CP安利角落，收集甜蜜互动、重要节点与心动瞬间。无论你从哪里入坑，都能找到同好共鸣。</p>
+        <div class="feature-grid">
+          <div class="feature-item">
+            <i class="fas fa-camera-retro"></i>
+            <h3>高清图集</h3>
+            <p>珍藏每一帧画面</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-video"></i>
+            <h3>独家视频</h3>
+            <p>重温名场面</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-clock"></i>
+            <h3>时间线</h3>
+            <p>从初遇到未来</p>
+          </div>
+          <div class="feature-item">
+            <i class="fas fa-newspaper"></i>
+            <h3>最新资讯</h3>
+            <p>活动/合作实时更新</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 图片/视频展示 (映像) -->
+    <section id="media" style="margin: 2.5rem 0;">
+      <div class="card">
+        <h2 style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.8rem; color: #4b310f;">
+          <i class="fas fa-film"></i> 映像 · 甜蜜时刻
+        </h2>
+        <div class="media-section">
+          <div class="media-image">
+            <!-- 示例图片：使用 Unsplash 的温馨CP风格图片，可替换为你的图片 -->
+            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="CP温馨时刻">
+          </div>
+          <div class="video-container">
+            <!-- 示例视频：使用 Coverr 免费视频，体现温暖互动；可替换为自己视频 -->
+            <video controls poster="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80">
+              <source src="https://cdn.coverr.co/videos/coverr-two-people-hugging-2769/1080p.mp4" type="video/mp4">
+              您的浏览器不支持视频播放。
+            </video>
+          </div>
+        </div>
+        <p style="margin-top: 1.2rem; color: #5a3f1a; font-style: italic;">
+          <i class="fas fa-quote-left"></i> 点击视频播放，回顾那些让人心动的拥抱与对视。图片可随时替换为你自己的CP图。
+        </p>
+        <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="#" class="btn-outline"><i class="fas fa-images"></i> 查看更多图集</a>
+          <a href="#" class="btn-outline"><i class="fas fa-play-circle"></i> 观看完整视频</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 活动资讯区域 -->
+    <section id="news">
+      <div class="card">
+        <h2 style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 1.5rem; color: #4b310f;">
+          <i class="fas fa-bullhorn"></i> 活动资讯
+        </h2>
+        <div class="news-grid">
+          <div class="news-item">
+            <i class="fas fa-calendar-check"></i> <strong>2026 夏日合体直播</strong>
+            <p style="margin-top: 0.6rem;">7月25日 晚20:00 · 双人游戏联动，不见不散！</p>
+            <span style="font-size: 0.85rem; color: #b45f1a;">#直播 #互动</span>
+          </div>
+          <div class="news-item">
+            <i class="fas fa-gift"></i> <strong>纪念画册预售</strong>
+            <p style="margin-top: 0.6rem;">《Recordari: First Chapter》限量发售中。</p>
+            <span style="font-size: 0.85rem; color: #b45f1a;">#周边 #收藏</span>
+          </div>
+          <div class="news-item">
+            <i class="fas fa-music"></i> <strong>合作单曲上线</strong>
+            <p style="margin-top: 0.6rem;">双人合唱曲《橙色温度》已登陆音乐平台。</p>
+            <span style="font-size: 0.85rem; color: #b45f1a;">#音乐 #合作</span>
+          </div>
+          <div class="news-item">
+            <i class="fas fa-fan"></i> <strong>线下应援打卡</strong>
+            <p style="margin-top: 0.6rem;">8月10日 城市大屏应援，详情请关注站子。</p>
+            <span style="font-size: 0.85rem; color: #b45f1a;">#线下 #应援</span>
+          </div>
+        </div>
+        <div style="margin-top: 1.2rem;">
+          <a href="#" class="btn-outline"><i class="fas fa-rss"></i> 订阅最新资讯</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 时间线区域 -->
+    <section id="timeline">
+      <div class="card">
+        <h2 style="display: flex; align-items: center; gap: 0.7rem; margin-bottom: 2rem; color: #4b310f;">
+          <i class="fas fa-history"></i> 重要时间线
+        </h2>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <h4><i class="fas fa-seedling"></i> 初次相遇</h4>
+              <div class="timeline-date">2024.03.15</div>
+              <p>在春日企划中首次同框，礼貌又生涩的打招呼成为一切的开端。</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <h4><i class="fas fa-hand-holding-heart"></i> 第一次合作舞台</h4>
+              <div class="timeline-date">2024.08.20</div>
+              <p>双人特别舞台《星与月》，眼神交流引爆热议，名场面诞生。</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <h4><i class="fas fa-cake-candles"></i> 互相庆生</h4>
+              <div class="timeline-date">2025.02.14 / 2025.11.07</div>
+              <p>零点祝福与惊喜礼物，私下聚餐照片流露出自然亲密感。</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="timeline-dot"></div>
+              <div class="timeline-line"></div>
+            </div>
+            <div class="timeline-content">
+              <h4><i class="fas fa-globe"></i> 海外同行旅行</h4>
+              <div class="timeline-date">2026.01.10</div>
+              <p>被拍到同游济州岛，随后双方发文“和喜欢的人看海”，CP粉过大年。</p>
+            </div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-marker">
+              <div class="timeline-dot"></div>
+              <!-- 最后一项不显示线 -->
+            </div>
+            <div class="timeline-content">
+              <h4><i class="fas fa-sparkles"></i> 官宣合作综艺</h4>
+              <div class="timeline-date">2026.06.01</div>
+              <p>固定出演《我们的记录》，每周四播出，持续发糖中。</p>
+            </div>
+          </div>
+        </div>
+        <p style="color: #6b4a24; margin-top: 0.5rem;"><i class="fas fa-arrow-right"></i> 更多细节持续更新，与我们一起见证。</p>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2026 Recordari · 为爱发电 CP安利站 <i class="fas fa-heart" style="color: #ffebcc;"></i></p>
+    <p style="font-size: 0.8rem; margin-top: 0.3rem;">GitHub: yrqf/recordari · 背景色 #f29c26</p>
+  </footer>
+</div>
+</body>
+</html>
